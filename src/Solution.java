@@ -3,6 +3,11 @@ public class Solution {
 	
 	public class cell {
 		int row,col;
+		
+		cell(int row, int col) {
+			this.row = row;
+			this.col = col;
+		}
 
 		public int getRow() {
 			return row;
@@ -45,8 +50,9 @@ public class Solution {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
+		//scanning input and obtaining required
+		
 	}
 
 }
