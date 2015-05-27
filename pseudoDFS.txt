@@ -1,0 +1,26 @@
+pseudo code for connected cell in a grid
+static int counter=0
+int dfs-visit(G,s) {
+int tempCounter = 0;
+source = s
+parent[s] = null
+neighbours = s.neighbour()
+for each v in neighbours {
+ if v not in parent {
+   set parent[v] = s
+   counter = counter + 1
+   dfs-visit(G,v)
+  }
+ }
+ return tempCounter
+}
+
+void dfs(G,V,s) {
+  for each v in V {
+    parent[v] = null
+	if (dfs-visit(G,v) > counter) {
+	counter=tempCounter;
+	}
+  }
+  print counter
+}
