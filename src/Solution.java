@@ -1,52 +1,86 @@
+package com.pramit.practice.codes;
 
-public class Solution {
-	
-	public class cell {
-		int row,col;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
 
-		public int getRow() {
-			return row;
-		}
+class ConnectedCellsInAGrid {
 
-		public void setRow(int row) {
-			this.row = row;
-		}
+    public static class Cell {
 
-		public int getCol() {
-			return col;
-		}
+        int row;
+        int col;
+        Cell parent;
 
-		public void setCol(int col) {
-			this.col = col;
-		}
+        Cell (int row, int col) {
+            this.row = row;
+            this.col = col;
+        }
 
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			cell other = (cell) obj;
-			if (!getOuterType().equals(other.getOuterType()))
-				return false;
-			if (col != other.col)
-				return false;
-			if (row != other.row)
-				return false;
-			return true;
-		}
+        public int getRow() {
+            return row;
+        }
 
-		private Solution getOuterType() {
-			return Solution.this;
-		}
-		
-	}
+        public void setRow(int row) {
+            this.row = row;
+        }
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+        public int getCol() {
+            return col;
+        }
 
-	}
+        public void setCol(int col) {
+            this.col = col;
+        }
+
+        public Cell getParent() {
+            return parent;
+        }
+
+        public void setParent(Cell parent) {
+            this.parent = parent;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Cell other = (Cell) obj;
+            if (col != other.col)
+                return false;
+            if (row != other.row)
+                return false;
+            return true;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Scanner in = null;
+        List<Cell> inputList = new LinkedList<Cell>();
+        // scanning input and obtaining a list of cell objects
+        try {
+            in = new Scanner(System.in);
+            int noOfRows = in.nextInt();
+            int noOfCols = in.nextInt();
+            for (int i=0; i<noOfRows; i++) {
+                for (int j=0; j<noOfCols; j++) {
+                    inputList.add(new Cell(i,j));
+                }
+            }
+            System.out.println(findMaxLength(inputList));
+        } finally {
+            in.close();
+        }
+    }
+
+    private static int findMaxLength(List<Cell> inputList) {
+        
+        return null;
+    }
 
 }
