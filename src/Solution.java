@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Solution {
 
 	static int counter = 0;
-	static Map<Cell, Cell> parentListTemp = new HashMap<Cell, Cell>();
+	static Map<Cell, Boolean> parentListTemp = new HashMap<Cell, Boolean>();
 	static List<Cell> inputList = new ArrayList<Solution.Cell>();
 
 	public static class Cell {
@@ -23,6 +23,30 @@ public class Solution {
 		}
 		public int getCol() {
 			return col;
+		}
+		
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + col;
+			result = prime * result + row;
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Cell other = (Cell) obj;
+			if (col != other.col)
+				return false;
+			if (row != other.row)
+				return false;
+			return true;
 		}		
 	}
 
@@ -40,7 +64,6 @@ public class Solution {
 						inputList.add(new Cell(i,j));
 				}
 			}
-			System.out.println("size of input list:"+inputList.size());
 			System.out.println(DFS(inputList));
 		} finally {
 			in.close();
@@ -49,30 +72,26 @@ public class Solution {
 
 	private static int DFS(List<Cell> inputList) {
 		Map<Cell, Object> parentList = new HashMap<Solution.Cell, Object>();
-		Object dummy = new Object();
 		int tempCounter = 0;
 		for (Cell cell:inputList) {
-			if (!parentList.containsKey(cell)) {
-				parentList.put(cell, dummy);
+			if (parentListTemp.containsKey(cell) && !parentListTemp.get(cell)) {
+				parentListTemp.put(cell, true);
 				tempCounter=counter;
 				DFSVisit(cell);
 				if (counter>tempCounter)
 					tempCounter=counter;
 				counter=0;
-				parentListTemp=new HashMap<Cell, Cell>();
 			}
 		}
 		return tempCounter+1;
 	}
 
 	private static void DFSVisit(Cell cell) {
-
+		parentListTemp.put(cell, true);
 		for (Cell c : adjacent(cell)) {
-			if (!parentListTemp.containsKey(c)) {
-				parentListTemp.put(c, cell);
+			if (!parentListTemp.get(c)) {
 				counter++;
-				System.out.println(counter);
-				DFSVisit(cell);
+				DFSVisit(c);
 			}
 		}
 	}
@@ -82,12 +101,12 @@ public class Solution {
 		for (Cell c : inputList) {
 			if (c.getCol()==cell.getCol()-1 && c.getRow()==cell.getRow()-1 ||
 					c.getCol()==cell.getCol() && c.getRow()==cell.getRow()-1 ||
-					c.getCol()==cell.getCol()+1  && c.getRow()==cell.getRow()-1|| 
-					c.getCol()==cell.getCol()-1  && c.getRow()==cell.getRow()  ||
-					c.getCol()==cell.getCol()+1 && c.getRow()==cell.getRow()  ||
-					c.getCol()==cell.getCol()-1  && c.getRow()==cell.getRow()+1 ||
-					c.getCol()==cell.getCol()  && c.getRow()==cell.getRow()+1 ||
-					c.getCol()==cell.getCol()+1  && c.getRow()==cell.getRow()+1) {
+					c.getCol()==cell.getCol()+1 && c.getRow()==cell.getRow()-1|| 
+					c.getCol()==cell.getCol()-1 && c.getRow()==cell.getRow() ||
+					c.getCol()==cell.getCol()+1 && c.getRow()==cell.getRow() ||
+					c.getCol()==cell.getCol()-1 && c.getRow()==cell.getRow()+1 ||
+					c.getCol()==cell.getCol() && c.getRow()==cell.getRow()+1 ||
+					c.getCol()==cell.getCol()+1 && c.getRow()==cell.getRow()+1) {
 				neighbourList.add(c);
 			}
 		}
