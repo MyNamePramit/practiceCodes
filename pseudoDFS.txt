@@ -16,11 +16,14 @@ for each v in neighbours {
 }
 
 void dfs(G,V,s) {
+ parent = {}
   for each v in V {
+  if (v not in parent) {
     parent[v] = null
 	if (dfs-visit(G,v) > counter) {
 	counter=tempCounter;
 	}
+     }
   }
   print counter
 }
