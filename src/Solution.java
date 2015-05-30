@@ -74,9 +74,8 @@ public class Solution {
 		Map<Cell, Object> parentList = new HashMap<Solution.Cell, Object>();
 		int tempCounter = 0;
 		for (Cell cell:inputList) {
-			if (parentListTemp.containsKey(cell) && !parentListTemp.get(cell)) {
+			if (!parentListTemp.containsKey(cell)) {
 				parentListTemp.put(cell, true);
-				tempCounter=counter;
 				DFSVisit(cell);
 				if (counter>tempCounter)
 					tempCounter=counter;
@@ -89,7 +88,7 @@ public class Solution {
 	private static void DFSVisit(Cell cell) {
 		parentListTemp.put(cell, true);
 		for (Cell c : adjacent(cell)) {
-			if (!parentListTemp.get(c)) {
+			if (!parentListTemp.containsKey(c)) {
 				counter++;
 				DFSVisit(c);
 			}
